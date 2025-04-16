@@ -11,6 +11,7 @@ datasource db {
  
 generator client {
   provider = "prisma-client-js"
+  output   = "app/generated/prisma"
 }
  
 model User {
@@ -26,6 +27,11 @@ model User {
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  conversations Conversation[]
+  messages Message[]
+  usageLogs UsageLog[]
+  preferences UserPreference?
 }
  
 model Account {
@@ -81,4 +87,50 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
  
   @@id([userId, credentialID])
+}
+
+model Conversation {
+  id String @id @default(cuid())
+  userId String
+  title String @default("New Chat")
+  contextSummary String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  messages Message[]
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Message {
+  id String @id @default(cuid())
+  conversationId String
+  userId String?
+  content String
+  messageType String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  conversation Conversation @relation(fields: [conversationId], references: [id])
+  user User? @relation(fields: [userId], references: [id])
+
+  @@index([conversationId])
+}
+
+model UsageLog {
+  id String @id @default(cuid())
+  userId String
+  type String
+  count Int @default(1)
+  createdAt DateTime @default(now())
+  user User @relation(fields: [userId], references: [id])
+  @@index([userId, type])
+}
+
+model UserPreference {
+  id String @id @default(cuid())
+  userId String @unique
+  theme String @default("default")
+  notificationsEnabled Boolean @default(true)
+  otherPrefs Json?
+
+  user User @relation(fields: [userId], references: [id])
 }
