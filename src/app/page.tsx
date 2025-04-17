@@ -4,13 +4,22 @@ import Container from "@/components/layout/Container";
 import MessageInput from "@/components/layout/MessageInput";
 import TextInput from "@/components/input/TextInput";
 import SendButton from "@/components/input/SendButton";
+import UserBubble from "@/components/chat/UserBubble";
+import SystemBubble from "@/components/chat/SystemBubble";
 
 export default function Home() {
   return (
     <>
       <Container>
         <Header>YAPPIE</Header>
-        <ChatLayout></ChatLayout>
+        <ChatLayout>
+          <UserBubble>
+            Hello.
+          </UserBubble>
+          <SystemBubble>
+            Hi.
+          </SystemBubble>
+        </ChatLayout>
         <MessageInput>
           <TextInput />
           <SendButton />
