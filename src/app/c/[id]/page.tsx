@@ -6,6 +6,7 @@ import TextInput from "@/components/input/TextInput";
 import SendButton from "@/components/input/SendButton";
 import UserBubble from "@/components/chat/UserBubble";
 import SystemBubble from "@/components/chat/SystemBubble";
+import ReactMarkdown from "react-markdown";
 
 type Props = {
   params: {
@@ -32,9 +33,18 @@ export default async function Page({ params }: Props ) {
         <Header>YAPPIE</Header>
         <ChatLayout>
           {messages.map((msg: any) => {
-            return <UserBubble key={msg.id}>{msg.content}</UserBubble>
+            return msg.messageType === "user" ? (
+            <UserBubble key={msg.id}>{msg.content}</UserBubble>
+            ) : (
+              <SystemBubble key={msg.id}>
+                <div className="prose break-words max-w-full whitespace-pre-wrap">
+                  <ReactMarkdown>
+                    {msg.content}
+                  </ReactMarkdown>
+                </div>
+              </SystemBubble>
+            )
           })}
-          <SystemBubble>Hi.</SystemBubble>
         </ChatLayout>
         <MessageInput>
           <TextInput conversationId={id}/>

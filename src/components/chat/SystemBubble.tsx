@@ -7,8 +7,10 @@ const inter = Inter({style: "normal", subsets:["latin"]})
 export default function SystemBubble({children} : Props) {
     return (
         <div className="flex w-full justify-start">
-          <Card className={`flex items-center justify-center p-4 max-w-180 wrap-anywhere bg-[#b388ff] shadow-[7px_7px_0px_#fff085] border-0 outline-0 ring-0 text-neutral-950 ${inter.className} text-shadow-[0.4px_0.4px_0.01px_#000000]`}>
-            {children}
+          <Card className={`max-w-[100%] sm:max-w-[75%] p-4 bg-[#b388ff] border-0 outline-0 ring-0 shadow-[7px_7px_0px_#fff085] text-neutral-950 ${inter.className} text-shadow-[0.4px_0.4px_0.01px_#000000] break-words`}>
+            <div className="whitespace-pre-wrap break-words">
+              {children}
+            </div>
           </Card>
         </div>
     );
