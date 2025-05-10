@@ -5,6 +5,7 @@ import { SquarePen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
+import Link from 'next/link';
 
 type Props = React.PropsWithChildren<object>;
 const bangers = Bangers({weight: "400", style: "normal", subsets: ['latin']})
@@ -27,7 +28,9 @@ export default function Header({children} : Props) {
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Button variant='ghost' size='icon' className={`${cn("size-7")} hover:bg-neutral-500 group`}>
-                            <SquarePen className='!w-5 !h-5 stroke-white group-hover:stroke-black'/>
+                            <Link href={'/'}>
+                                <SquarePen className='!w-5 !h-5 stroke-white group-hover:stroke-black'/>
+                            </Link>
                         </Button>
                     </TooltipTrigger>
                     <TooltipContent>

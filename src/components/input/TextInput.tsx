@@ -2,18 +2,16 @@
 
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 type Props = {
-    conversationId: string|null;
+  isSending: boolean;
+  onSend: () => Promise<void>;
+  input: string;
+  setInput: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function TextInput({conversationId}: Props) {
+export default function TextInput({isSending, onSend, input, setInput}: Props) {
 //   const [conversationId, setConversationId] = useState<string | null>(null);
-  const [input, setInput] = useState("");
-  const router = useRouter();
-
   function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
     setInput(e.target.value);
   }
@@ -21,28 +19,10 @@ export default function TextInput({conversationId}: Props) {
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      handleSend();
+      if(!isSending) {
+        onSend();
+      }
     }
-  }
-
-  async function handleSend() {
-    if (input.trim() === "") return;
-
-    const res = await fetch("/api/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: input, conversationId }),
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-      console.log("Sent message: ", data);
-        router.push(`/c/${data.conversationId}`);
-    } else {
-      console.error("Error sending message");
-    }
-
-    setInput("");
   }
 
   return (

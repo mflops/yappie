@@ -1,4 +1,6 @@
-type Props = React.PropsWithChildren<object>;
+import { ReactNode } from "react";
+
+type Props = {children: ReactNode};
 
 export default function MessageInput({children} : Props) {
     return (

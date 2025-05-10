@@ -47,3 +47,37 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({id: (await conversation).id});
 }
+
+export async function GET(req: NextRequest) {
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+        return NextResponse.json({error: "Unauthorised"}, {status: 401});
+    }
+
+    const email = session.user?.email;
+
+    if (!email) {
+        return NextResponse.json({error: "Unauthorised"}, {status: 401});
+    }
+
+    const user = await prisma.user.findUnique({
+        where: {email},
+    });
+
+    if (!user) {
+        return NextResponse.json({error: "User not found"}, {status: 404});
+    }
+
+    const conversations = await prisma.conversation.findMany({
+        where: {userId: user.id},
+        orderBy: {createdAt: "desc"},
+        select: {
+            id: true,
+            title: true,
+            createdAt: true,
+        }
+    });
+
+    return NextResponse.json(conversations);
+}

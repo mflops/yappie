@@ -21,3 +21,21 @@ export async function getAIResponse(messages: ChatCompletionMessageParam[]) {
 
     return completion.choices[0].message.content;
 }
+
+export async function getChatTitle(firstMessage: string) {
+    const completion = await client.chat.completions.create({
+        model: "accounts/fireworks/models/deepseek-v3-0324",
+        messages: [
+            {
+                role: "system",
+                content: `You're a witty chat titler. Your job is to generate a short, punchy, creative title (max 6 words, no punctuation, no quotes) based ONLY on the user's first message. Make it a lil fun, a lil smart, but not cringe.`
+            },
+            {
+                role: "user",
+                content: firstMessage
+            }
+        ]
+    })
+
+    return completion.choices[0].message.content?.trim() || "Untitled";
+}

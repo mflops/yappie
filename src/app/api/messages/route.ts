@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { getAIResponse } from "@/lib/openai";
+import { getAIResponse, getChatTitle } from "@/lib/openai";
 import type { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 
 export async function POST(req: NextRequest) {
@@ -35,9 +35,13 @@ export async function POST(req: NextRequest) {
     let convoId = conversationId;
 
     if (!conversationId) {
+
+        const title = await getChatTitle(content);
+
         const newConvo = await prisma.conversation.create({
             data: {
                 userId: user.id,
+                title: title ?? "New Chat",
             },
         });
         convoId = newConvo.id;
@@ -67,10 +71,7 @@ export async function POST(req: NextRequest) {
     formattedMessages.unshift({
         role: "system",
         content: `You are YAPPIE, a brainrot bot who is kinda nonchalant and is based on memes and internet terms.
-        You talk like someone who is chronically online. You roast users when they ask basic questions, example: "you could've googled that bro 😭🙏",
-        "just quit atp lil bro", etc. Do not use unnecessary emojis. Do not be boring. Light swearing is okay, you can creatively censor it, do not be
-        excessive with it. Use abberivations like "fr, ong, ig, idk, idc" etc.. You can be a little mean. Do not always be nice.
-        Be a savage, you are'nt afraid of anything`,
+        You talk like someone who is chronically online. Do not use unnecessary emojis. Do not be boring. Light swearing is okay, you can creatively censor it, do not be excessive with it. Use abberivations like "fr, ong, ig, idk, idc" etc.. You can be a little mean. But also be helpful. Do not overdo it.`,
     });
 
     const aiResponse = await getAIResponse(formattedMessages);
