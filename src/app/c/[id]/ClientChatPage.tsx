@@ -28,6 +28,7 @@ export default function Page({ id }: Props ) {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [latestAssistantMessageId, setLatestAssistantMessageId] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchMessages() {
@@ -45,6 +46,15 @@ export default function Page({ id }: Props ) {
 
     fetchMessages();
   }, [id]);
+
+  // Track the latest assistant message for word fade-in effect
+  useEffect(() => {
+    const assistantMessages = messages.filter(msg => msg.messageType === "assistant" && msg.content !== "");
+    if (assistantMessages.length > 0) {
+      const latest = assistantMessages[assistantMessages.length - 1];
+      setLatestAssistantMessageId(latest.id);
+    }
+  }, [messages]);
 
   async function handleSend() {
     if (isSending || input.trim() === "") return;
@@ -118,7 +128,11 @@ export default function Page({ id }: Props ) {
             msg.messageType === "user" ? (
               <UserBubble key={msg.id}>{msg.content}</UserBubble>
             ) : (
-              <SystemBubble key={msg.id}>
+              <SystemBubble 
+                key={msg.id}
+                useWordFadeIn={msg.id === latestAssistantMessageId && msg.content !== ""}
+                content={msg.content}
+              >
                 {msg.content === "" ? (
                   <div className="space-y-2">
                     <Skeleton className="h-4 w-[250px]" />
