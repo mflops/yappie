@@ -27,7 +27,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <link rel="icon" href="/yappie.ico" sizes="64x64" />
+      <head>
+        <link rel="icon" href="/yappie.ico" sizes="any" />
+        <link rel="icon" href="/yappie.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="/yappie.ico" />
+        <link rel="apple-touch-icon" href="/yappie.ico" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen flex`}
         suppressHydrationWarning
