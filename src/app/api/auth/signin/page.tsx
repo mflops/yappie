@@ -7,6 +7,7 @@ import { Inter, Bangers } from "next/font/google";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Head from "next/head";
+import Image from "next/image";
 
 const inter = Inter({subsets: ['latin']});
 const bangers = Bangers({subsets: ['latin'], weight: ['400']});
@@ -60,7 +61,7 @@ export default function SignInPage() {
                 </div>
                 <Button onClick={() => signIn("google", {redirect: true, callbackUrl: '/'})} className={inter.className + " p-10 flex items-center justify-center gap-x-6 bg-black text-white outline-none border-none shadow-[10px_10px_0px_#ffba00] hover:shadow-[10px_10px_0px_#fcbe19] hover:bg-neutral-700 rounded-3xl hover:cursor-pointer transition-all duration-150 sm:p-12"}>
                     <h6 className="text-xl sm:text-2xl">Sign in with Google</h6>
-                    <img src="/google.svg" alt="Google" className="w-10 h-10" />
+                    <Image src="/google.svg" alt="Google" className="w-10 h-10" />
                 </Button>
             </div>
         </>

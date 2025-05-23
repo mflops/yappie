@@ -64,7 +64,7 @@ export default function Home() {
       <Container>
         <Header>YAPPIE</Header>
         <ChatLayout>
-          <div className="w-full h-full flex items-center justify-center text-center text-xl text-neutral-500">No messages yet. Let's change that.</div>
+          <div className="w-full h-full flex items-center justify-center text-center text-xl text-neutral-500">No messages yet. Let&apos;s change that.</div>
         </ChatLayout>
         <MessageInput>
           <TextInput 
