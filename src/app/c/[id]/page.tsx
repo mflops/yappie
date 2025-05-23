@@ -6,6 +6,6 @@ type Props = {
   },
 };
 
-export default function Page({params} : Props) {
-  return <ClientChatPage id={params.id} />
+export default async function Page({ params }: Props) {
+  return <ClientChatPage id={params.id} />;
 }
