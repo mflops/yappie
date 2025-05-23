@@ -22,27 +22,12 @@ export default function WordFadeIn({ text, isActive, speed = 150 }: WordFadeInPr
     );
   }
 
-  // Create the visible text by joining the visible words
+  // Create visible text by joining visible words, preserving markdown
   const visibleText = words.slice(0, visibleWordCount).join(' ');
   
   return (
     <div className="prose break-words max-w-full whitespace-pre-wrap">
-      <div className="inline">
-        {words.map((word, index) => (
-          <span 
-            key={index}
-            className={`inline transition-opacity duration-300 ${
-              index < visibleWordCount ? 'opacity-100' : 'opacity-0'
-            }`}
-            style={{
-              animationDelay: `${index * (speed || 150)}ms`
-            }}
-          >
-            {word}
-            {index < words.length - 1 && ' '}
-          </span>
-        ))}
-      </div>
+      <ReactMarkdown>{visibleText}</ReactMarkdown>
     </div>
   );
 } 

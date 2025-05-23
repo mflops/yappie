@@ -61,7 +61,7 @@ export default function SignInPage() {
                 </div>
                 <Button onClick={() => signIn("google", {redirect: true, callbackUrl: '/'})} className={inter.className + " p-10 flex items-center justify-center gap-x-6 bg-black text-white outline-none border-none shadow-[10px_10px_0px_#ffba00] hover:shadow-[10px_10px_0px_#fcbe19] hover:bg-neutral-700 rounded-3xl hover:cursor-pointer transition-all duration-150 sm:p-12"}>
                     <h6 className="text-xl sm:text-2xl">Sign in with Google</h6>
-                    <Image src="/google.svg" alt="Google" className="w-10 h-10" />
+                    <Image src="/google.svg" alt="Google" width={40} height={40} />
                 </Button>
             </div>
         </>
