@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getAIResponse, getChatTitle, generateContext } from "@/lib/openai";
 import type { ChatCompletionMessageParam } from "openai/resources/index.mjs";
+import type { Message } from "@prisma/client";
 
 export async function POST(req: NextRequest) {
     try {
@@ -55,7 +56,7 @@ export async function POST(req: NextRequest) {
         });
 
         const formattedMessages: ChatCompletionMessageParam[] = previousMessages.map(
-            (msg) => ({
+            (msg: Message) => ({
                 role: msg.messageType === "user" ? "user" : "assistant",
                 content: msg.content,
             })
