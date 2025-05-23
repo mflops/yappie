@@ -1,14 +1,37 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Inter, Bangers } from "next/font/google";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const inter = Inter({subsets: ['latin']});
 const bangers = Bangers({subsets: ['latin'], weight: ['400']});
 
 export default function SignInPage() {
+    const { data: session, status } = useSession();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            router.push("/");
+        }
+    }, [status, router]);
+
+    if (status === "loading") {
+        return (
+            <div className="flex h-screen w-screen items-center justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-black"></div>
+            </div>
+        );
+    }
+
+    if (status === "authenticated") {
+        return null;
+    }
+
     return (
         <div className="flex flex-col h-screen w-screen text-center items-center justify-center gap-y-40 p-4">
             <div className="flex flex-col gap-y-4">
@@ -16,7 +39,7 @@ export default function SignInPage() {
                 <h1 className={bangers.className}>Welcome to YAPPIE 🧠🗣️</h1>
             </Card>
             <Card className="p-4 text-xl outline-none border-none shadow-none">
-                <h6 className={inter.className}>{"(you’ve made a terrible decision. but hey, let’s chat.)"}</h6>
+                <h6 className={inter.className}>{"(you've made a terrible decision. but hey, let's chat.)"}</h6>
             </Card>
             </div>
             <Button onClick={() => signIn("google", {redirect: true, callbackUrl: '/'})} className={inter.className + " p-10 flex items-center justify-center gap-x-6 bg-black text-white outline-none border-none shadow-[10px_10px_0px_#ffba00] hover:shadow-[10px_10px_0px_#fcbe19] hover:bg-neutral-700 rounded-3xl hover:cursor-pointer transition-all duration-150 sm:p-12"}>

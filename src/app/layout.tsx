@@ -18,9 +18,6 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "YAPPIE",
   description: "Brainrot Chatbot",
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
 
 export default function RootLayout({
@@ -30,6 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <link rel="icon" href="/yappie.ico" sizes="64x64" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen flex`}
         suppressHydrationWarning
