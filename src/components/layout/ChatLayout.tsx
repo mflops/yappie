@@ -1,10 +1,21 @@
 import { Card } from "@/components/ui/card";
+import { useEffect, useRef } from "react";
 
-type Props = React.PropsWithChildren<object>;
+type Props = {
+    children: React.ReactNode;
+};
 
 export default function ChatLayout({children} : Props) {
+    const chatRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (chatRef.current) {
+            chatRef.current.scrollTop = chatRef.current.scrollHeight;
+        }
+    }, [children]);
+
     return (
-        <Card className="h-full flex p-4 gap-4 overflow-y-auto border-0 outline-0 ring-0 shadow-none">
+        <Card ref={chatRef} className="h-full flex flex-col p-4 gap-4 overflow-y-auto border-0 outline-0 ring-0 shadow-none">
             {children}
         </Card>
     );

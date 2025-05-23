@@ -45,16 +45,15 @@ export default function Page({ id }: Props ) {
       if (res.ok) {
         const data = await res.json();
         setInput("");
-        // Fetch the updated messages
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://localhost:3000';
-        const msgRes = await fetch(`${baseUrl}/api/messages?conversationId=${id}`, {cache: 'no-store'});
-        const msgData = await msgRes.json();
-        setMessages(msgData.messages);
+        // Add the new messages to the existing messages array
+        setMessages(prevMessages => [...prevMessages, data.message, data.aiMessage]);
       } else {
         console.error("Error sending message");
       }
     } catch (err) {
       console.error("Error: ", err);
+    } finally {
+      setIsSending(false);
     }
   }
 

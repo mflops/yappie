@@ -2,6 +2,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 import { type NextAuthOptions } from "next-auth";
+import { getServerSession } from "next-auth";
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
@@ -18,3 +19,8 @@ export const authOptions = {
     signIn: "/auth/signin",
   }
 };
+
+export async function getCurrentUser() {
+  const session = await getServerSession(authOptions);
+  return session?.user || null;
+}

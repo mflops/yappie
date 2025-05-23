@@ -6,15 +6,35 @@ import Container from "@/components/layout/Container";
 import MessageInput from "@/components/layout/MessageInput";
 import TextInput from "@/components/input/TextInput";
 import SendButton from "@/components/input/SendButton";
-import UserBubble from "@/components/chat/UserBubble";
-import SystemBubble from "@/components/chat/SystemBubble";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
   const router = useRouter();
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/api/auth/signin");
+    }
+  }, [status, router]);
+
+  if (status === "loading") {
+    return (
+      <Container>
+        <div className="w-full h-full flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-black"></div>
+        </div>
+      </Container>
+    );
+  }
+
+  if (!session) {
+    return null;
+  }
 
   async function handleSend() {
     if (isSending || input.trim() === "") return;
@@ -46,12 +66,7 @@ export default function Home() {
       <Container>
         <Header>YAPPIE</Header>
         <ChatLayout>
-          <UserBubble>
-            Hello.
-          </UserBubble>
-          <SystemBubble>
-            Hi.
-          </SystemBubble>
+          <div className="w-full h-full flex items-center justify-center text-center text-xl text-neutral-500">No messages yet. Let's change that.</div>
         </ChatLayout>
         <MessageInput>
           <TextInput 

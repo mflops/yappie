@@ -43,7 +43,7 @@ export default function AppSidebar() {
             <SidebarContent>
                 <SidebarGroup title='Chats'>
                     {conversations.length === 0 ? (
-                        <div className='text-sm text-muted-foreground p-2'>No conversations yet.</div>
+                        <div className='text-sm text-muted-foreground p-2'>Your inbox is emptier than my DMs.</div>
                     ): (
                         conversations.map((convo) => {
                             return (
@@ -56,7 +56,7 @@ export default function AppSidebar() {
                 </SidebarGroup>
             </SidebarContent>
             <SidebarFooter>
-                <div className='flex p-2 bg-neutral-800 rounded-2xl gap-4'>
+                <div className='flex p-2 bg-neutral-800 rounded-2xl gap-4 items-center w-full justify-center'>
                     <Avatar>
                         <AvatarImage src={ user?.image ?? '' }/>
                         <AvatarFallback>{user?.name?.at(0) ?? '🧑'}</AvatarFallback>
