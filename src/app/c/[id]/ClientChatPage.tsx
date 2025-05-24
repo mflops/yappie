@@ -34,7 +34,10 @@ export default function Page({ id }: Props ) {
     async function fetchMessages() {
       try {
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000';
-        const res = await fetch(`${baseUrl}/api/messages?conversationId=${id}`, {cache: 'no-store'});
+        const res = await fetch(`${baseUrl}/api/messages?conversationId=${id}`, {
+          cache: 'no-store',
+          credentials: 'include'
+        });
         if (!res.ok) throw new Error('Failed to fetch messages');
         const data = await res.json();
         setMessages(data.messages);
@@ -84,6 +87,7 @@ export default function Page({ id }: Props ) {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({content: input, conversationId: id}),
+        credentials: 'include'
       });
 
       if (!res.ok) throw new Error('Failed to send message');

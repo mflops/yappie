@@ -99,6 +99,11 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
     try {
+        const session = await getServerSession(authOptions);
+        if (!session?.user?.email) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
         const { searchParams } = new URL(req.url);
         const conversationId = searchParams.get("conversationId");
 
@@ -107,6 +112,27 @@ export async function GET(req: NextRequest) {
                 { error: "Missing conversationId" },
                 { status: 400 }
             );
+        }
+
+        // Get user to verify ownership
+        const user = await prisma.user.findUnique({
+            where: { email: session.user.email },
+        });
+
+        if (!user) {
+            return NextResponse.json({ error: "User not found" }, { status: 404 });
+        }
+
+        // Verify the conversation belongs to the user
+        const conversation = await prisma.conversation.findFirst({
+            where: { 
+                id: conversationId,
+                userId: user.id 
+            },
+        });
+
+        if (!conversation) {
+            return NextResponse.json({ error: "Conversation not found" }, { status: 404 });
         }
 
         const messages = await prisma.message.findMany({
