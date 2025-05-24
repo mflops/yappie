@@ -33,17 +33,40 @@ export default function Page({ id }: Props ) {
   useEffect(() => {
     async function fetchMessages() {
       try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000';
-        const res = await fetch(`${baseUrl}/api/messages?conversationId=${id}`, {
+        console.log("Fetching messages for conversation:", id);
+        const res = await fetch(`/api/messages?conversationId=${id}`, {
           cache: 'no-store',
           credentials: 'include'
         });
-        if (!res.ok) throw new Error('Failed to fetch messages');
+        
+        console.log("Fetch response status:", res.status, res.statusText);
+        
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({ error: "Unknown error" }));
+          console.error("API Error:", errorData);
+          throw new Error(`Failed to fetch messages: ${errorData.error || res.statusText}`);
+        }
+        
         const data = await res.json();
+        console.log("Fetched data:", data);
+        
+        if (!data.messages) {
+          console.warn("No messages property in response:", data);
+          setMessages([]);
+          return;
+        }
+        
+        if (!Array.isArray(data.messages)) {
+          console.error("Messages is not an array:", data.messages);
+          throw new Error("Invalid response format");
+        }
+        
+        console.log("Setting messages:", data.messages);
         setMessages(data.messages);
+        setError(null); // Clear any previous errors
       } catch (err) {
         console.error("Error fetching messages:", err);
-        setError("Failed to load messages");
+        setError(err instanceof Error ? err.message : "Failed to load messages");
       }
     }
 
