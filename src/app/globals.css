@@ -153,4 +153,38 @@
 html, body {
   padding: 0;
   margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Fix mobile viewport height issues */
+html {
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for modern browsers */
+}
+
+body {
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for modern browsers */
+  overflow: hidden;
+}
+
+/* Prevent overscroll on mobile */
+@media (max-width: 768px) {
+  html, body {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+}
+
+/* Prevent pull-to-refresh and overscroll */
+html {
+  overscroll-behavior: none;
+}
+
+body {
+  overscroll-behavior: none;
 }

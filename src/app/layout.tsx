@@ -34,7 +34,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/yappie.ico" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen flex`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-dvh flex`}
         suppressHydrationWarning
       >
         <AuthProvider>
