@@ -32,7 +32,7 @@ export default function SignInPage() {
                     <link rel="apple-touch-icon" href="/favicon.ico" />
                 </Head>
                 <div className="flex h-screen w-screen items-center justify-center">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-black"></div>
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-black dark:border-white"></div>
                 </div>
             </>
         );
