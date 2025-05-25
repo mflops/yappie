@@ -31,6 +31,21 @@ export default function Page({ id }: Props ) {
   const [latestAssistantMessageId, setLatestAssistantMessageId] = useState<string | null>(null);
 
   useEffect(() => {
+    // Check for optimistic messages in sessionStorage
+    const optimisticKey = `optimistic-${id}`;
+    const optimisticData = sessionStorage.getItem(optimisticKey);
+    
+    if (optimisticData) {
+      try {
+        const optimisticMessages = JSON.parse(optimisticData);
+        setMessages(optimisticMessages);
+        // Clean up the sessionStorage
+        sessionStorage.removeItem(optimisticKey);
+      } catch (err) {
+        console.error("Error parsing optimistic messages:", err);
+      }
+    }
+
     async function fetchMessages() {
       try {
         console.log("Fetching messages for conversation:", id);
@@ -52,7 +67,10 @@ export default function Page({ id }: Props ) {
         
         if (!data.messages) {
           console.warn("No messages property in response:", data);
-          setMessages([]);
+          // Only set empty if we don't have optimistic messages
+          if (!optimisticData) {
+            setMessages([]);
+          }
           return;
         }
         

@@ -78,6 +78,10 @@ export default function Home() {
       if (res.ok) {
         const data = await res.json();
         const convoId = data.conversationId;
+        
+        // Store optimistic messages in sessionStorage to avoid blank screen
+        sessionStorage.setItem(`optimistic-${convoId}`, JSON.stringify([userMessage, aiMessage]));
+        
         // Redirect to the conversation page where the real messages will be shown
         router.push(`/c/${convoId}`);
       } else {
