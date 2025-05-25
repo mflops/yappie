@@ -6,7 +6,7 @@ export default function Container({children} : Props) {
     return (
         <SidebarProvider>
             <AppSidebar />
-            <div className="flex flex-col flex-1 h-full overflow-hidden p-2 gap-4">
+            <div className="flex flex-col flex-1 h-full overflow-hidden p-2 gap-3 dark:bg-[#202020] pb-4">
                 {children}
             </div>
         </SidebarProvider>

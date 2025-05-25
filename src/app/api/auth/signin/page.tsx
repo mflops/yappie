@@ -50,16 +50,16 @@ export default function SignInPage() {
                 <link rel="shortcut icon" href="/favicon.ico" />
                 <link rel="apple-touch-icon" href="/favicon.ico" />
             </Head>
-            <div className="flex flex-col h-screen w-screen text-center items-center justify-center gap-y-40 p-4">
+            <div className="flex flex-col h-screen w-screen text-center items-center justify-center gap-y-40 p-4 dark:bg-[#202020]">
                 <div className="flex flex-col gap-y-4">
-                <Card className="p-8 text-5xl bg-black text-amber-400 text-shadow-[1px_1px_0.2px_#ffffff] outline-none border-none shadow-[10px_10px_0px_#ffba00] rounded-3xl lg:text-7xl md:text-6xl">
+                <Card className="p-8 text-5xl bg-black text-amber-400 outline-none border-none shadow-[10px_10px_0px_#ffba00] rounded-3xl lg:text-7xl md:text-6xl dark:text-[#758aef] dark:shadow-[10px_10px_0px_#758aef]">
                     <h1 className={bangers.className}>Welcome to YAPPIE 🧠🗣️</h1>
                 </Card>
-                <Card className="p-4 text-xl outline-none border-none shadow-none">
+                <Card className="p-4 text-xl outline-none border-none shadow-none bg-transparent">
                     <h6 className={inter.className}>{"(you've made a terrible decision. but hey, let's chat.)"}</h6>
                 </Card>
                 </div>
-                <Button onClick={() => signIn("google", {redirect: true, callbackUrl: '/'})} className={inter.className + " p-10 flex items-center justify-center gap-x-6 bg-black text-white outline-none border-none shadow-[10px_10px_0px_#ffba00] hover:shadow-[10px_10px_0px_#fcbe19] hover:bg-neutral-700 rounded-3xl hover:cursor-pointer transition-all duration-150 sm:p-12"}>
+                <Button onClick={() => signIn("google", {redirect: true, callbackUrl: '/'})} className={inter.className + " p-10 flex items-center justify-center gap-x-6 bg-black text-white outline-none border-none shadow-[10px_10px_0px_#ffba00] hover:shadow-[10px_10px_0px_#fcbe19] hover:bg-neutral-700 rounded-3xl hover:cursor-pointer transition-all duration-150 sm:p-12 dark:shadow-[10px_10px_0px_#758aef]"}>
                     <h6 className="text-xl sm:text-2xl">Sign in with Google</h6>
                     <Image src="/google.svg" alt="Google" width={40} height={40} />
                 </Button>

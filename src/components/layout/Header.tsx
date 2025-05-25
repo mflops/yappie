@@ -17,12 +17,12 @@ const bangers = Bangers({ weight: "400", style: "normal", subsets: ["latin"] });
 
 export default function Header({ children }: Props) {
   return (
-    <Card className="flex-row items-center justify-center bg-black shadow-[7px_7px_0px_#ffba00] p-4 outline-none border-none rounded-3xl">
+    <Card className="flex-row items-center justify-center bg-black shadow-[7px_7px_0px_#ffba00] p-4 outline-none border-none rounded-3xl dark:shadow-[7px_7px_0px_#758aef]">
       <div className="flex-1 flex-row flex items-center justify-start gap-3">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <SidebarTrigger className="text-white hover:bg-neutral-500 hover:!text-black w-9 h-9 rounded-xl"/>
+              <SidebarTrigger className="text-white hover:bg-neutral-500 hover:!text-black w-9 h-9 rounded-xl dark:hover:bg-neutral-500"/>
             </TooltipTrigger>
             <TooltipContent>
               <p>Sidebar</p>
@@ -35,7 +35,7 @@ export default function Header({ children }: Props) {
               <Button
                 variant="ghost"
                 size="icon"
-                className={`${cn("size-9")} hover:bg-neutral-500 group rounded-xl`}
+                className={`${cn("size-9")} hover:bg-neutral-500 group rounded-xl dark:hover:bg-neutral-500`}
               >
                 <Link href={"/"}>
                   <SquarePen className="!w-6 !h-6 stroke-white group-hover:stroke-black stroke-[1.5]" />
@@ -50,7 +50,7 @@ export default function Header({ children }: Props) {
       </div>
       <div className="flex-1 text-center">
         <h1
-          className={`${bangers.className} text-amber-400 text-5xl text-shadow-[1px_1px_0.2px_#ffffff]`}
+          className={`${bangers.className} text-amber-400 text-5xl  dark:text-[#758aef] `}
         >
           {children}
         </h1>

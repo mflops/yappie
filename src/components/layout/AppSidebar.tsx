@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { LogOut, Trash2 } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useRouter, usePathname } from 'next/navigation';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 type Conversation = {
     id: string,
@@ -98,9 +99,9 @@ export default function AppSidebar() {
     };
 
     return (
-        <Sidebar variant='floating' className={`m-0 outline-0 border-0 ring-0 ${inter.className}`}>
-            <SidebarHeader className='pt-6 bg-neutral-900 md:bg-transparent'>
-                <h1 className='text-white text-center text-2xl font-bold'>Chats</h1>
+        <Sidebar variant='floating' className={`m-0 outline-0 border-0 ring-0 ${inter.className} dark:bg-[#202020]`}>
+            <SidebarHeader className='pt-3 pb-3 md:pt-6 md:pb-3 md:pl-2 md:pr-2 bg-neutral-100 md:bg-transparent dark:bg-neutral-900 md:dark:bg-transparent rounded-tr-3xl'>
+                <h1 className='md:text-white text-black dark:text-white text-center text-2xl font-bold'>Chats</h1>
             </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>
@@ -118,7 +119,7 @@ export default function AppSidebar() {
                             >
                                 <Link 
                                     href={`/c/${convo.id}`} 
-                                    className='block p-3 pr-12 rounded-3xl text-center text-white hover:bg-neutral-800 transition-colors'
+                                    className='block p-3 pr-12 rounded-3xl text-center md:text-white hover:bg-neutral-800 transition-colors'
                                     title={convo.title}
                                 >
                                     {convo.title}
@@ -142,19 +143,22 @@ export default function AppSidebar() {
                     )}
                 </SidebarGroup>
             </SidebarContent>
-            <SidebarFooter className='bg-neutral-900 md:bg-transparent'>
-                <div className='flex p-2 bg-neutral-800 rounded-2xl gap-4 items-center w-full justify-center'>
+            <SidebarFooter className='bg-neutral-100 dark:bg-neutral-900 md:bg-transparent md:dark:bg-transparent rounded-br-3xl'>
+                <div className='flex p-2 bg-neutral-200 rounded-2xl gap-4 items-center w-full justify-center dark:bg-neutral-800 md:bg-neutral-800'>
                     <Avatar>
                         <AvatarImage src={user?.image ?? ''} />
                         <AvatarFallback>{user?.name?.at(0) ?? '🧑'}</AvatarFallback>
                     </Avatar>
                     <Button 
                         onClick={() => signOut({redirect: true, callbackUrl: '/api/auth/signin'})} 
-                        className='hover:cursor-pointer'
+                        className='hover:cursor-pointer bg-white hover:bg-neutral-300 dark:bg-neutral-700 dark:hover:bg-neutral-600 md:bg-neutral-700 md:hover:bg-neutral-600'
                         title='Logout'
+                        size='icon'
+                        variant='outline'
                     >
-                        <LogOut />
+                        <LogOut className='stroke-black dark:stroke-white md:stroke-white'/>
                     </Button>
+                    <ThemeToggle />
                 </div>
             </SidebarFooter>
         </Sidebar>

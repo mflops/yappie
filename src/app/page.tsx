@@ -103,7 +103,7 @@ export default function Home() {
         <Header>YAPPIE</Header>
         <ChatLayout>
           {messages.length === 0 ? (
-            <div className="w-full h-full flex items-center justify-center text-center text-xl text-neutral-500">
+            <div className="w-full h-full flex items-center justify-center text-center text-xl text-neutral-500 select-none">
               No messages yet. Let&apos;s change that.
             </div>
           ) : (
